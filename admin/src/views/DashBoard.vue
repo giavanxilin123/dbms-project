@@ -5,7 +5,7 @@
         <div class="overlay">
           <div style="padding: 20px; font-size: 18px; font-weight: 600; text-align: left"><i style="margin-right: 20px; font-size: 25px" class="el-icon-menu"></i>DASHBOARD</div>
           <div class="divider"></div>
-          <div class=user>user.name</div>
+          <div class=user>Gia Văn</div>
           <div class="divider"></div>
           <div class="sidebar-content" @click ="userManagement"><i class="el-icon-s-custom icon"></i>User Management</div>
           
@@ -16,12 +16,7 @@
       </el-col>
 
       <el-col style="background-color: #eee; overflow: auto" :span="20">
-        <!-- <div class="nav">
-          <el-badge :value="2" class="item">
-            <i class="el-icon-message-solid icon"></i>
-          </el-badge>
-          <i style="margin-left: 30px" class="el-icon-s-custom icon"></i>
-        </div> -->
+
         <router-view/>
       </el-col>
     </el-row>
@@ -45,7 +40,6 @@ export default {
         })
       },
       logOut() {
-        this.$store.dispatch('logOut');
         this.$router.push('/')
       },
     },

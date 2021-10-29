@@ -1,15 +1,16 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-
-Vue.use(Vuex)
+import Vue from 'vue';
+import Vuex from 'vuex';
+import { BASE_URL, actions } from './action';
+import { mutations } from './mutation';
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    BASE_URL,
+    allUsers: [],
   },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+  mutations,
+  actions,
+
+});
+

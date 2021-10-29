@@ -48,13 +48,8 @@ export default {
   },
   methods: {
     async logIn() {
-      try{
-          await this.$store.dispatch("logIn", this.form);
-          this.alertSuccess();
-          this.$router.push("/dashboard/management");
-        }catch(err){
-          this.alertErr(err)
-        }
+      this.alertSuccess();
+      this.$router.push("/dashboard/management");
     },
     
     alertErr(err) {

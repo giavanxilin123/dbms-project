@@ -16,25 +16,28 @@ const client = new Client({
     },
 });
 
-await client.connect();
-const query = `UPDATE member.member SET username = ?, 
-                                        postal_code = ?, 
-                                        last_name = ?, 
-                                        first_name = ?, 
-                                        email_address = ?, 
-                                        country = ?, 
-                                        company = ?, 
-                                        city = ?, 
-                                        address = ?, 
-                                        about_me = ?
-                                    WHERE id = ?`;
-await client.execute(query,['TMH24', '240199', 'Tran', 'Minh Hoang', 'hoangvt6868@gmail.com', 'VN', 'Vu Thao', 'VT', '30 Tran Quang Dieu', 'All about me', '1',], { prepare: true });
 
-const result = await client.execute('SELECT * FROM member.member;')
-console.log(`Your cluster returned ${result.rows[0].username} row(s)`);
+// const query = `UPDATE member.member SET username = ?, 
+//                                         postal_code = ?, 
+//                                         last_name = ?, 
+//                                         first_name = ?, 
+//                                         email_address = ?, 
+//                                         country = ?, 
+//                                         company = ?, 
+//                                         city = ?, 
+//                                         address = ?, 
+//                                         about_me = ?
+//                                     WHERE id = ?`;
+// await client.execute(query,['TMH24', '240199', 'Tran', 'Minh Hoang', 'hoangvt6868@gmail.com', 'VN', 'Vu Thao', 'VT', '30 Tran Quang Dieu', 'All about me', '1',], { prepare: true });
 
-app.get('/', function (req, res) {
-    res.send(result.rows[0]);
+
+
+
+app.get('/user', async (req, res) => {
+  await client.connect();
+  const result =  await client.execute('SELECT * FROM member.users;')
+  res.send(result.rows);
+
   });
   app.listen(3000, function () {
     console.log('Example app listening on port 3000!');

@@ -29,17 +29,17 @@
                             <el-col :span="4"><div>STT</div></el-col>
                             <el-col :span="4"><div>Name</div></el-col>
                             <el-col :span="4"><div>Email</div></el-col>
-                            <el-col :span="4"><div>Role</div></el-col>
-                            <el-col :span="4"><div>Created At <i class="el-icon-top"></i></div></el-col>
+                            <el-col :span="4"><div>Phone</div></el-col>
+                            <el-col :span="4"><div>Address</div></el-col>
                             <el-col :span="4"><div style="text-align: right">Actions</div></el-col>
                         </el-row>
                     </div>
                     <div class="table-body">
-                        <el-row v-for="(user,index) in allUsers" :key="index" style = "background-color: #f9f9f9" :gutter="20">
+                        <el-row v-for="user in allUsers" :key="user.id" style = "background-color: #f9f9f9" :gutter="20">
                             <el-col :span="4">
                                 <div class= "avatar">
                                     <div class="ava-img">
-                                        {{index+1}}
+                                        {{user.id}}
                                     </div>  
                                 </div>
                                 </el-col>
@@ -54,11 +54,11 @@
                                 </div>
                             </el-col>
                             <el-col :span="4">
-                                <div class= "role">
-                                    {{user.role}}
+                                <div class= "phone">
+                                    {{user.phone}}
                                 </div>
                             </el-col>
-                            <el-col :span="4"><div>2021-08-26 10:27:23</div></el-col>
+                            <el-col :span="4"><div>{{user.address}}</div></el-col>
                             <el-col :span="4">
                                 <div class="action">
                                     <div class="action-edit">
@@ -77,7 +77,6 @@
                             layout="prev, pager, next"
                             :total="20">
                         </el-pagination>
-                        
                     </div>
                 </div>
             </div>
@@ -105,18 +104,18 @@ export default {
             }],
             value: '',
             input: '',
-            allUsers: [
-                {
-                    name: 'Giavan',
-                    email: 'giavanxilin@gmail.com',
-                    role: 'admin'
-                }
-            ]
+            // allUsers: [
+            //     {
+            //         name: 'Giavan',
+            //         email: 'giavanxilin@gmail.com',
+            //         phone: '0935562526',
+            //         address: '256 Ly Thuong Kiet'
+            //     },
          }
     },
 
     async created() {
-        // await this.$store.dispatch('fetchUser');
+        await this.$store.dispatch('fetchUser');
     },
 
     methods: {
@@ -124,9 +123,9 @@ export default {
     },
     
     computed: {
-        // allUsers() {
-        //     return this.$store.state.allUsers
-        // }
+        allUsers() {
+            return this.$store.state.allUsers
+        }
     },
     
     
