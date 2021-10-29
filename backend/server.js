@@ -33,15 +33,32 @@ const client = new Client({
 
 
 
-app.get('/user', async (req, res) => {
+app.get('/user', async (req, res, next) => {
   await client.connect();
   const result =  await client.execute('SELECT * FROM member.users;')
   res.send(result.rows);
+});
 
-  });
-  app.listen(3000, function () {
+app.post('/add-user', async (req, res, next) => {
+  await client.connect();
+
+})
+
+app.put('/update-user', async (req, res, next) => {
+  await client.connect();
+  
+})
+
+app.put('/delete-user/:userId', async (req, res, next) => {
+  await client.connect();
+})
+  
+
+app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
-  });
+
+});
+
 await client.shutdown();
 }
 
