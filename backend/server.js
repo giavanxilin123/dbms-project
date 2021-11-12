@@ -1,10 +1,12 @@
 const { Client } = require("cassandra-driver");
 var express = require('express');
 const cors = require("cors");
+const { v4: uuidv4 } = require('uuid');
+
 
 var app = express();
 app.use(cors());
-
+app.use(express.json()); 
 async function run() {
 const client = new Client({
     cloud: {
@@ -31,8 +33,6 @@ const client = new Client({
 // await client.execute(query,['TMH24', '240199', 'Tran', 'Minh Hoang', 'hoangvt6868@gmail.com', 'VN', 'Vu Thao', 'VT', '30 Tran Quang Dieu', 'All about me', '1',], { prepare: true });
 
 
-
-
 app.get('/user', async (req, res, next) => {
   await client.connect();
   const result =  await client.execute('SELECT * FROM member.users;')
@@ -41,22 +41,30 @@ app.get('/user', async (req, res, next) => {
 
 app.post('/add-user', async (req, res, next) => {
   await client.connect();
-
+  let user = req.body
+    const query = `INSERT INTO member.users (id, name, email, phone, address) VALUES (?, ?, ?, ?, ?)`
+    const result = await client.execute(query, [uuidv4(), user.name, user.email, user.phone, user.address])
+    res.send(result)
 })
 
-app.put('/update-user', async (req, res, next) => {
+app.put('/update-user/:id', async (req, res, next) => {
+  const {id} = req.params
+  let userUpdate = req.body
   await client.connect();
-  
+  const query = `UPDATE member.users SET name = ?, email = ?, address = ?, phone = ? WHERE id = ?`
+  const result = await client.execute(query, [userUpdate.name, userUpdate.email, userUpdate.address, userUpdate.phone, id])
+  res.send(result)
 })
 
-app.put('/delete-user/:userId', async (req, res, next) => {
+app.put('/delete-user/:id', async (req, res, next) => {
+  const {id} = req.params
   await client.connect();
+  const result = await client.execute(`DELETE from member.users where id = ${id}`)
+  res.send(result)
 })
   
-
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
-
 });
 
 await client.shutdown();

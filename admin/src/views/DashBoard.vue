@@ -8,9 +8,7 @@
           <div class=user>Gia Văn</div>
           <div class="divider"></div>
           <div class="sidebar-content" @click ="userManagement"><i class="el-icon-s-custom icon"></i>User Management</div>
-          
-          
-          
+
           <div @click ="logOut" class="sidebar-content" ><i class="el-icon-switch-button icon"></i>Log Out</div>
         </div>
       </el-col>

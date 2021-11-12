@@ -14,6 +14,16 @@ const routes = [
         name:'User Management',
         component: () => import('../views/dashboard/UserManagement.vue')
       },
+      {
+        path: 'add-user',
+        name:'Add User',
+        component: () => import('../views/dashboard/AddUser.vue')
+      },
+      {
+        path: 'update-user',
+        name:'Update User',
+        component: () => import('../views/dashboard/UpdateUser.vue')
+      },
     ]
   },
   {

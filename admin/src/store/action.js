@@ -31,5 +31,17 @@ export const actions = {
           reject(err);
         })
     })
+  },
+  deleteUserById(ctx, payload) {
+    return new Promise((resolve, reject) => {
+      client
+        .put(`${BASE_URL}/delete-user/${payload}`)
+        .then(res => {
+          resolve(res);
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
   }
 }

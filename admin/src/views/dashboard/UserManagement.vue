@@ -7,7 +7,7 @@
             </div>
             <div class="card-body">
                 <div style="position: relative" class="add">
-                    <el-button class= "add-button">ADD USER</el-button>
+                    <el-button @click="toAddUserPage" class= "add-button">ADD USER</el-button>
                 </div>
                 <div class="toolbar">
                     <div>
@@ -35,11 +35,11 @@
                         </el-row>
                     </div>
                     <div class="table-body">
-                        <el-row v-for="user in allUsers" :key="user.id" style = "background-color: #f9f9f9" :gutter="20">
+                        <el-row v-for="(user, index) in allUsers" :key="user.id" style = "background-color: #f9f9f9" :gutter="20">
                             <el-col :span="4">
                                 <div class= "avatar">
                                     <div class="ava-img">
-                                        {{user.id}}
+                                        {{index + 1}}
                                     </div>  
                                 </div>
                                 </el-col>
@@ -61,10 +61,10 @@
                             <el-col :span="4"><div>{{user.address}}</div></el-col>
                             <el-col :span="4">
                                 <div class="action">
-                                    <div class="action-edit">
+                                    <div @click="toEditUserPage(user.id)" class="action-edit">
                                         <i class="el-icon-edit"></i>
                                     </div>
-                                    <div class="action-delete">
+                                    <div @click="deleteUser(user.id)" class="action-delete">
                                         <i class="el-icon-delete"></i>
                                     </div>
                                 </div>
@@ -119,7 +119,37 @@ export default {
     },
 
     methods: {
-        
+        deleteUser(id) {
+            this.$confirm('This will permanently delete user. Continue?', 'Warning', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning'
+                }).then(async () => {
+                    await this.$store.dispatch('deleteUserById', id)
+                    this.$message({
+                        type: 'success',
+                        message: 'Delete completed'
+                    })
+                })
+                .then(() => {
+                    this.$store.dispatch('fetchUser');
+                })
+                .catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: 'Delete canceled'
+                });          
+            });
+        },
+        toAddUserPage() {
+            this.$router.push('/dashboard/add-user')
+        },
+        toEditUserPage(id) {
+            this.$router.push({
+                query: {id : id},
+                path: "/dashboard/update-user"
+            })
+        }
     },
     
     computed: {
